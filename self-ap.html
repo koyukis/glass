@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<title>タブに出る表示</title>
+		<meta name="keywords" content="WAV, wav, 卓展, 卓, 卓展2021" />
+		<meta name="description" content="どんなサイトなのかの説明" />
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+		<link rel="stylesheet" href="css/normalize.css" />
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+
+	<body>
+		<header>
+			<p class="header">ふらす工房</p>
+		</header>
+		<main>
+            <p class="p-center border">イメージをアップロード</p>
+            <p class="left-margin">画像をアップロード</p>
+			<form method="post" enctype="multipart/form-data">
+				<div id="dragDropArea">
+					<div class="drag-drop-inside">
+						<p class="drag-drop-info">ここにファイルをドロップ</p>
+						<p>または</p>
+						<p class="drag-drop-buttons">
+							<input id="fileInput" type="file" accept="image/*" value="ファイルを選択" name="photo" onChange="photoPreview(event)">
+						</p>
+						<div id="previewArea"></div>
+					</div>
+				</div>
+			</form>
+            <p class="left-margin">要望を記入</p>
+			<textarea class="tarea" name="example" cols="50" rows="10"></textarea>
+
+
+			<div class="flex-center">
+				<div>
+					<a href="https://koyukis.github.io/glass/one.html" class="under-line"></a>
+					<button class="btntextchange btn-move">戻る</button></div>
+				<div>
+					<a href="https://koyukis.github.io/glass/word.html" class="under-line"></a>
+					<button class="btntextchange btn-move">次へ</button></div>
+				
+			</div>
+
+        </main>
+		<footer></footer>
+		<script src="js/ap.js"></script>
+	</body>
+</html>

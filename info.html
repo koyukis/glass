@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<title>タブに出る表示</title>
+		<meta name="keywords" content="WAV, wav, 卓展, 卓, 卓展2021" />
+		<meta name="description" content="どんなサイトなのかの説明" />
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+		<link rel="stylesheet" href="css/normalize.css" />
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+
+	<body>
+		<header>
+			<p class="header">ふらす工房</p>
+		</header>
+		<main>
+            <p class="p-center border">お客様情報入力</p>
+            <div class="flex-center">
+                <label>お名前</label>
+                <input type="text" size="50">
+            </div>
+
+            <div class="flex-center">
+                <label>性別</label>
+                <button class="btntextchange btn-move">男</button>
+                <button class="btntextchange btn-move">女</button>
+            </div>
+
+            <div class="flex-center">
+                <label>電話番号</label>
+                <input type="text" size="50">
+            </div>
+
+            <div class="flex-center">
+                <label>メールアドレス</label>
+                <input type="text" size="50">
+            </div>
+
+            <div class="flex-center">
+                <label>住所</label>
+                <input type="text" size="50">
+            </div>
+
+            <div class="flex-center">
+                <label>作品公開許可</label>
+                <input type="range" class="onoff" min="0" max="1" value="0">
+            </div>
+
+            <div class="flex-center">
+                <label>チャット公開許可</label>
+                <input type="range" class="onoff" min="0" max="1" value="0">
+            </div>
+
+            <div class="flex-center">
+                <label>公開用ニックネーム</label>
+                <input type="text" size="50">
+            </div>
+
+
+
+                <style>
+                    input[type=range] {
+                        -webkit-appearance: none;
+                        width: 60px;
+                        margin: 0px 0;
+                    }
+                    input[type=range]:focus {
+                        outline: none;
+                    }
+                    input[type=range]::-webkit-slider-runnable-track {
+                        width: 100%;
+                        height: 24px;
+                        background: #ddd;
+                        border: 0;
+                        box-shadow: 0 0 1px 1px #aaa;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    input[type=range]::-webkit-slider-thumb {
+                        width: 32px;
+                        height: 24px;
+                        margin-top: 0px;
+                        border: 1px solid #0003;
+                        border-radius: 4px;
+                        background: #f5f5f5;
+                        cursor: pointer;
+                        -webkit-appearance: none;
+                    }
+                    input[type=range].on::-webkit-slider-runnable-track {
+                        background: rgb(45, 252, 73);
+                        box-shadow: 0 0 1px 1px rgb(0, 209, 0);
+                    }
+                </style>
+
+
+
+
+			<div class="flex-center btn-last">
+                <div>
+                    <a href="https://koyukis.github.io/glass/more-ap.html" class="under-line"></a>
+                    <button class="btntextchange btn-move">戻る</button></div>
+				<div>
+                    <a href="https://koyukis.github.io/glass/send.html" class="under-line"></a>
+                    <button class="btntextchange btn-move">確認画面へ</button></div>
+
+			</div>
+
+        </main>
+		<footer></footer>
+        <script>
+            document.body.querySelector("input").oninput = eve => {
+                eve.target.classList.toggle("on", !!~~eve.target.value)
+            }
+            </script>
+		<script src="js/ap.js"></script>
+	</body>
+</html>

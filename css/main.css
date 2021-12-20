@@ -3,3 +3,240 @@
 	margin: 0;
 	padding: 0;
 }
+
+.header{
+	background-color: rgba(255,255,255,0.7);
+	width: 100%;
+	height: 80px;
+	position: fixed;
+	z-index: 3;/* 重なり */
+}
+.header-row{
+
+}
+
+
+.change{
+	margin-bottom:20%;
+}
+
+.right-margin{
+	margin-right:10%;
+}
+.left-margin{
+	margin-left:10%
+}
+
+.some-center{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.p-center{
+	text-align:center;
+}
+.flex-center{
+	text-align: center;
+	margin:10px;
+}
+.flex-right{
+	display: flex;
+	justify-content: flex-end;
+	margin:10px;
+}
+.img{
+	width:100%;
+}
+
+
+.slider {
+	position:relative;
+	z-index: 1;
+	/*↑z-indexの値をh1のz-indexの値よりも小さくして背景に回す*/
+	/* height: 100vh; */
+	/*スライダー全体の縦幅を画面の高さいっぱい（100vh）にする*/
+}
+
+.slider-item {
+	width: 100%;
+	/*各スライダー全体の横幅を画面の高さいっぱい（100%）にする*/
+	/* height:100vh; */
+	/*各スライダー全体の縦幅を画面の高さいっぱい（100vh）にする*/
+	background-repeat: no-repeat;/*背景画像をリピートしない*/
+	background-position: center;
+	/*背景画像の位置を中央に*/
+	background-size: cover;
+	/*背景画像が.slider-item全体を覆い表示*/
+}
+
+
+
+/*infoエリアをはじめは非表示*/
+#info{
+	display: none;
+}
+#info2{
+	display: none;
+}
+#info3{
+	display: none;
+}
+#info4{
+	display: none;
+}
+
+.modal-open:hover{
+	opacity: 0.8; filter: white;
+	-webkit-transition: all .3s; transition: all .3s;
+}
+/*モーダルの横幅を変更したい場合*/
+.modaal-container{
+    max-width: 600px;
+}
+
+/*モーダルのボタンの色を変更したい場合*/
+.modaal-close:after,
+.modaal-close:before{
+	background:#ccc;
+}
+
+.modaal-close:focus:after,
+.modaal-close:focus:before,
+.modaal-close:hover:after,
+.modaal-close:hover:before{
+	background:#666;
+}
+
+
+.how-grid{
+	display: grid;
+	margin-left: 5%;
+	margin-right: 5%;
+	gap:3%;
+	grid-template-columns:1fr 1fr 1fr 1fr;
+}
+.how-grid-item{
+	text-align:center;
+}
+
+
+
+.btntextchange{ /*テキストの基点とするためrelativeを指定*/
+	position: relative;
+    /*ボタンの形状*/
+	border: 0px solid #050505;
+	background:#F5F2F2;
+	/* border-radius:5px; */
+
+	padding: 20px;
+    text-align: center;
+	display: inline-block;
+    text-decoration: none;
+    color: #050505;
+    outline: none;
+    /*アニメーションの指定*/
+    transition: all .2s;
+}
+.btn-toppage{
+	border: 1px solid #050505;
+	min-width:250px;
+}
+.btn-one{
+	min-width: 100%;
+	padding:40px;
+	margin-bottom:30%;
+}
+.btn-move{
+	min-width:10%;
+	padding: 15px;
+	border: none;
+	border-radius:25px;
+}
+
+/*hoverした際の変化*/
+.btntextchange:hover{
+	background:#050505;
+	color:#fff;
+}
+.request-grid{
+	display: grid;
+	margin-left: 5%;
+	margin-right: 5%;
+	gap:3%;
+	grid-template-columns:1fr 1fr 1fr;
+}
+.request-grid-item{
+}
+
+.works-grid{
+	display: grid;
+	grid-template-columns:1fr 1fr 1fr 1fr;
+}
+.works-grid-item{
+}
+.works-box{
+	height:17vw;
+	text-align:center;
+	background-color: #d8d9c7
+}
+
+/* .one-center{
+	margin:20%;
+} */
+
+
+
+
+.border{
+	padding:7%;
+	border-bottom:3px solid rgb(100,100,100);
+	margin-left: 3%;
+	margin-right:3%;
+	margin-bottom: 3%;
+}
+
+.btn-last{
+	margin-top: 15%;
+}
+
+#dragDropArea{
+	background-color: #f4f4f4;
+	margin: 2% 10% 5% 10%;
+	padding: 10px;
+	border: #ddd dashed 2px;
+	min-height: 200px;
+	text-align: center;
+}
+#dragDropArea p{
+	color: #999;
+	font-weight: bold;
+	font-size: 14px;
+	font-size: 1.4em;
+}
+#dragDropArea .drag-drop-buttons{
+	margin-top: 20px;
+	font-size: 12px;
+	font-size: 1.2em;
+}
+.drag-drop-buttons input{
+	margin: auto;
+}
+
+.tarea{
+    display: inline-block;
+    width: 80%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
+    background: #f4f4f4;
+    margin: 2% 10% 15% 10%;
+    line-height: 1.5;
+    height: 6em;
+}
+
+label{
+	display: inline-block;
+    text-align: right;
+    width: 150px;
+	margin-bottom: 3%;
+}
