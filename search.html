@@ -16,17 +16,20 @@
 
 	<body>
 		<header>
-			<p class="header">ふらす工房</p>
+            <img class="logo header" src="images/logo.png">
 		</header>
 		<main>
             <p class="p-center border">イメージ写真を探す</p>
             <div class="flex-center">
 
-                <label>キーワード検索</label>
+                <label class="left-margin-2">キーワード検索</label>
                 <input type="text" size="40">
                 <button class="btntextchange btn-move">検索</button>
             </div>
-                <p class="left-margin">いいねした作品から探す</p>
+                <p class="left-margin-2">いいねした作品から探す</p>
+				<div class="left-margin">
+					<div class=" heart heartred"></div><img class="img-30 request-grid-item" src="images/request/request-04.jpg">
+				</div>
 
 			<div class="flex-center btn-last">
                 <div>
@@ -38,6 +41,13 @@
 
 			</div>
 
+			<script>
+				function opacity() {
+					var obj = document.getElementsByClassName("btn")[0];
+					obj.style.border = "solid 3px red";
+					alert("click");
+				}
+			</script>
         </main>
 		<footer></footer>
 		<script src="js/ap.js"></script>

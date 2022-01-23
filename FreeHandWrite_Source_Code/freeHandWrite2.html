@@ -1,0 +1,656 @@
+<html>
+	<head>
+	<meta charset="utf-8">
+    <title>Canvasお絵描きアプリ - YoheiM.NET</title>
+
+    <link rel="stylesheet" href="css/jquery-ui-1.8.16.custom.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
+    <style TYPE="text/css">
+        * {margin:0px; padding:0px;}
+        body {margin:10px;}
+        #canvasArea {background-color:black; position:relative; width:640px; height:480px;}
+        #myCanvas {position:absolute; top:0px; left:0px;}
+        .tmpImage {background-color:black; margin-right:5px;}
+        .layer {width:100px; background-image:url("bg_none.png"); margin-top:5px; margin-left:5px; border:3px solid white; float:left;}
+        .layerSelected {width:100px; background-image:url("bg_none.png"); margin-top:5px; margin-left:5px; border:3px solid yellow; float:left;}
+        .eye {background-image:url("eye.png");width:25px; height:15px; margin-left:5px; display:block; float:left;}
+        .noneEye {width:25px; height:15px; margin-left:5px; display:block; float:left;}
+        .eye :hover {border: 2px solid #999;}
+        .noneEye :hover {border: 2px solid #999;}
+        #addLayerButton {width:20px; height:20px; text-align:center; line-height:10px; background-color:white;}
+        #addLayerButton:hover {background-color:yellow;}
+        .nomalBtn {padding:5px;}
+
+    </style>
+	<script src="js/jquery.1.6.4.min.js"></script>
+    <script src="js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script src="js/colorpicker.js"></script>
+	<script type="text/javascript">
+
+    /**********************************
+    Canvas Free Hand Drawing
+
+    Creator: YoheiM.NET(http://www.yoheim.net/)
+    Licence: Apache Licence 2.0
+
+    ***********************************/
+
+	$(function(){
+		var drawFlag = false;
+		var oldX;
+		var oldY;
+		var lineWidth = 10;
+		var strokeStyle = '#ff0000';
+        var fillStyle = '#ff0000';
+		var can = $('#myCanvas');
+        var canvasArea = $("#canvasArea");
+		var p1 = $("#p1");
+		var p2 = $("#p2");
+		var canDraw = $("#canDraw");
+        var context = can.get(0).getContext('2d');
+        var layerArea = $("#layerArea");
+        var body = $("body");
+
+        var tmpList = $("#tmpList");
+        var prefix = "12345678";
+
+        // state
+        var STATUS_DEFAULT = 0;
+        var STATUS_DRAW    = 1;
+        var STATUS_POLIGON = 2;
+        var STATUS_NONE    = 9;
+        var currentStatus  = STATUS_DEFAULT;
+        var status         = STATUS_DRAW;
+
+        // layer control.
+        var pos_layer = 0;
+        var layer = [];
+        var canvasItems = [];
+
+		//initialize
+		$(".setWidth:nth-child(4)").css("background-color", "red");
+
+		// control drawFlag.
+		body.mousedown(function(e){
+            if(can.css("display") == "none") {currentStatus = STATUS_NONE; return;}
+			currentStatus = status;
+			canDraw.text("Drawing YES");
+			oldX = e.clientX - canvasArea.position().left + scrollX();
+            oldY = e.clientY - canvasArea.position().top + scrollY();;
+
+		});
+		body.mouseup(function(e){
+            if (currentStatus == STATUS_NONE) {return;}
+
+            if (currentStatus == STATUS_POLIGON) {
+                var x = e.clientX - canvasArea.position().left + scrollX();;
+                var y = e.clientY - canvasArea.position().top + scrollY();
+                var strokeX = (oldX < x) ? oldX : x;
+                var strokeY = (oldY < y) ? oldY : y;
+                var width = Math.abs(x - oldX);
+                var height = Math.abs(y - oldY);
+				context.strokeStyle = strokeStyle;
+				context.lineWidth = lineWidth;
+                context.strokeRect(strokeX, strokeY, width, height);
+            }
+
+            currentStatus = STATUS_DEFAULT;
+			canDraw.text("Drawing NO");
+
+            // refresh layer.
+            refreshLayer();
+
+		});
+
+		// draw.
+		body.mousemove(function(e){
+            if (currentStatus == STATUS_NONE) {return;}
+
+			// show mouse position.
+			var x = e.clientX - canvasArea.position().left + scrollX();
+            var y = e.clientY - canvasArea.position().top + scrollY();
+			p1.text(Math.floor(x));
+			p2.text(Math.floor(y));
+
+			// draw
+			if (currentStatus == STATUS_DRAW) {
+				//var context = can.get(0).getContext('2d');
+				context.strokeStyle = strokeStyle;
+				context.lineWidth = lineWidth;
+				context.lineJoin = "round";
+				context.lineCap = "round";
+				context.beginPath();
+				context.moveTo(oldX, oldY);
+				context.lineTo(x, y);
+				context.stroke();
+				context.closePath();
+                oldX = x;
+                oldY = y;
+			}
+
+            // draw poligon
+/*
+            if (currentStatus == STATUS_POLIGON) {
+                var strokeX = (oldX < x) ? oldX : x;
+                var strokeY = (oldY < y) ? oldY : y;
+                var width = Math.abs(x - oldX);
+                var height = Math.abs(y - oldY);
+				context.strokeStyle = strokeStyle;
+				context.lineWidth = lineWidth;
+                context.strokeRect(strokeX, strokeY, width, height);
+            }
+*/
+		});
+
+		$(".setWidth").click(function(){
+			lineWidth = $(this).text();
+			$(".setWidth").css("background-color", "");
+			$(this).css("background-color", "red");
+		});
+
+		$("#clearButton").click(function(){
+			context.clearRect(0, 0, can.width(), can.height());
+            refreshLayer();
+		});
+
+
+
+        var imageMemory = new Array(5); // キャンバスのイメージの保存用配列
+var flagMemory = 0; // 現在のキャンバスの番号
+$('#backBtn, #forwardBtn').attr('disabled', true);
+// 現在のキャンバス状態を保存
+function saveImageData(){
+    // 現在の状態を保存
+    if(flagMemory == imageMemory.length-1){
+        imageMemory.shift();
+    }else{
+        ++flagMemory;
+    }
+    
+    if(flagMemory == imageMemory.length-1){
+        $('#forwardBtn').attr('disabled',true);
+    }
+    
+    imageMemory[flagMemory] = ctx.getImageData(0,0,canvas.width,canvas.height);
+    
+    $('#backBtn').attr('disabled',false);
+}
+// 戻るボタン
+$('#backBtn').click(function(){
+    if(flagMemory > 0){
+        flagMemory--;
+        ctx.putImageData(imageMemory[flagMemory], 0, 0);
+
+        $('#forwardBtn').attr('disabled', false);
+        if(flagMemory==0){
+            $('#backBtn').attr('disabled', true);
+        }
+    }
+});
+// 進むボタン
+$('#forwardBtn').click(function(){
+    if(flagMemory < imageMemory.length-1){
+        flagMemory++;
+        ctx.putImageData(imageMemory[flagMemory], 0, 0);
+
+        $('#backBtn').attr('disabled', false);
+        if(flagMemory==imageMemory.length-1){
+            $('#forwardBtn').attr('disabled', true);
+        }
+    }
+
+});
+		// set color pikcer
+        /*
+		$("#colorRed").get(0).getContext('2d').fillStyle = 'rgba(255,0,0,1)';
+		$("#colorRed").get(0).getContext('2d').fillRect(0,0,20,20);
+		$("#colorGreen").get(0).getContext('2d').fillStyle = 'rgba(0,255,0,1)';
+		$("#colorGreen").get(0).getContext('2d').fillRect(0,0,20,20);
+		$("#colorBlue").get(0).getContext('2d').fillStyle = 'rgba(0,0,255,1)';
+		$("#colorBlue").get(0).getContext('2d').fillRect(0,0,20,20);
+		$("#colorWhite").get(0).getContext('2d').fillStyle = 'rgba(255,255,255,1)';
+		$("#colorWhite").get(0).getContext('2d').fillRect(0,0,20,20);
+		$("#colorBlack").get(0).getContext('2d').fillStyle = 'rgba(0,0,0,1)';
+		$("#colorBlack").get(0).getContext('2d').fillRect(0,0,20,20);
+		$("#colorSelected").get(0).getContext('2d').fillStyle = strokeStyle;
+		$("#colorSelected").get(0).getContext('2d').fillRect(0,0,20,20);
+		$("#colorPicker canvas").click(function(){
+			strokeStyle = this.getContext('2d').fillStyle;
+			$("#colorSelected").get(0).getContext('2d').fillStyle = strokeStyle;
+			$("#colorSelected").get(0).getContext('2d').fillRect(0,0,20,20);
+		});
+        */
+
+		$("#saveButton").click(function(){
+            var mc = document.createElement("canvas");
+            mc.width  = can.width();
+            mc.height = can.height();
+            for (var i = 0; i < layer.length; i++) {
+                console.log("i="+i);
+                layer[i].width  = can.width() + "px";
+                layer[i].height = can.height() + "px";
+                mc.getContext("2d").drawImage(layer[i], 0, 0);
+                layer[i].width  = 100 + "px";
+                layer[i].height = Math.floor(100 * can.height() / can.width()) + "px";
+            }
+            var data = mc.toDataURL("image/png");
+			data = data.replace("image/png", "image/octet-stream");
+			window.open(data, "save");
+		});
+
+        $("#tmpSaveButton").click(function(){
+            if(!window.localStorage){alert("一時保存機能はブラウザがサポートしていません。"); return;}
+            var base64 = can.get(0).toDataURL();
+            // alert(base64);
+            for(var i = 1; i <= 10; i++) {
+                if(!window.localStorage.getItem(prefix + "tmpData" + i))break;
+            }
+            if (i > 10) {alert("一時保存領域が一杯です。"); return;}
+            window.localStorage.setItem("12345678tmpData"+i, base64);
+            loadTmpList();
+        });
+
+        $("#loadtmpDataButton").click(function(){
+            if(!window.localStorage){alert("一時保存機能はブラウザがサポートしていません。"); return;}
+            var base64 = window.localStorage.getItem(prefix + "tmpData1");
+            if (base64) {
+                var c = can.get(0).getContext("2d");
+                c.clearRect(0, 0, can.get(0).width, can.get(0).height);
+                var image = new Image();
+                image.src = base64;
+                image.onload = function(){
+                    c.drawImage(image, 0, 0);
+                }
+            }
+        });
+
+
+
+        // load tmp save data.
+        var loadTmpList = function() {
+        tmpList.get(0).innerHTML = "";
+        var timer = null;
+        if (window.localStorage) {
+            for (var i = 1; i <= 10; i++) {
+                var base64 = window.localStorage.getItem(prefix + "tmpData" + i);
+                if (base64) {
+                    var image = new Image();
+                    image.src = base64;
+                    image.index = i;
+                    image.onload = function(){
+                        this.width = 100;
+                        //this.style.backgroundColor = "black";
+                        this.className = "tmpImage";
+                        tmpList.get(0).appendChild(this);
+                    };
+                    image.onmousedown = function(){
+                        var img = this;
+                        timer = setTimeout(function(){
+                            if (confirm("削除しますか？")) {
+                                window.localStorage.removeItem(prefix + "tmpData" + img.index);
+                                for (var i = (img.index+1); i <= 10; i++) {
+                                    var base64 = window.localStorage.getItem(prefix + "tmpData" + i);
+                                    window.localStorage.removeItem(prefix + "tmpData" + i);
+                                    if (!base64) {break;}
+                                    window.localStorage.setItem(prefix + "tmpData" + (i-1), base64);
+                                }
+                                loadTmpList();
+                            }
+                            }, 1500);
+                    }
+                    image.onmouseup = function(){
+                        clearTimeout(timer);
+                        var c = can.get(0).getContext("2d");
+                        c.clearRect(0, 0, can.get(0).width, can.get(0).height);
+                        c.drawImage(this, 0, 0);
+                    }
+                }
+            }
+
+            if (!window.localStorage.getItem(prefix + "tmpData" + 1)) {
+                $("#title_tmpList").hide();
+            } else {
+                $("#title_tmpList").show();
+            }
+        }
+        }
+        loadTmpList();
+
+        // Button Actions.
+        $("#drawButton").click(function(){alert("draw");       status = STATUS_DRAW});
+        $("#poligonButton").click(function(){alert("poligon"); status = STATUS_POLIGON});
+
+        // ColorPicker
+        $("#colorPickerDiv").css("background-color",fillStyle);
+        $("#colorPickerDiv").ColorPicker({
+            onChange: function (hsb, hex, rgb) {
+                //$('#colorPickerDiv').html("#" + hex);
+                $("#colorPickerDiv").css("background-color","#"+hex);
+                fillStyle = strokeStyle = context.fillStyle = context.strokeStyle = '#'+hex;
+            }
+        });
+
+/*********** Layer Funtions(Start) ****************/
+        // refresh target layer.
+        function refreshLayer () {
+            var aImage = layer[pos_layer];
+            $(aImage).attr("data-layer", can.get(0).toDataURL());
+            aImage.src = $(aImage).attr("data-layer");
+        }
+
+        // clear select layer style.
+        function clearLayerStyle() {$("#layerArea img").removeClass("layerSelected").addClass("layer");}
+
+        // change selected layer.
+        function selectMe(){
+            clearLayerStyle();
+            this.className = "layerSelected";
+            pos_layer = $(this).attr("data-pos");
+            console.log("selectMe:pos_layer="+pos_layer);
+            refreshCanvas();
+        }
+        function refreshCanvas(){
+            canvasArea.children("img").remove();
+            canvasItems = [];
+            for(var i = 0; i < layer.length; i++) {
+                console.log("pos=" + i + ", data-visible=" + $(layer[i]).attr("data-visible"));
+                if (i == pos_layer) {
+                    console.log("canvas_pos=" + i);
+                    can.css("z-index", i);
+                    var c = can.get(0).getContext("2d");
+                    c.clearRect(0, 0, can.get(0).width, can.get(0).height);
+                    c.drawImage(layer[i], 0, 0);
+                    canvasItems.push(can.get(0));
+                    if ($(layer[i]).attr("data-visible") == "true") {
+                        can.css("display", "block");
+                    } else {
+                        can.css("display", "none");
+                    }
+                } else {
+                    console.log("img_pos=" + i);
+                    var tmpImage = new Image();
+                    tmpImage.src = $(layer[i]).attr("data-layer");
+                    $(tmpImage).css("z-index",i);
+                    $(tmpImage).css("position","absolute");
+                    tmpImage.ondragstart = function(){return false;}
+                    canvasItems.push(tmpImage);
+                    if ($(layer[i]).attr("data-visible") == "true") {
+                        $(tmpImage).css("display", "block");
+                    } else {
+                        $(tmpImage).css("display", "none");
+                    }
+                    tmpImage.onload = function(){
+                        canvasArea.append(this);
+                    }
+                }
+            }
+        }
+
+        // add layer.
+        var addLayer = function (){
+            var img = new Image();
+            img.src = "none.png";
+            img.isFirst = true;
+            img.onload = function(){
+                if(!this.isFirst){return;}
+                clearLayerStyle();
+                this.className = "layerSelected";
+                this.style.height = Math.floor(100 * can.height() / can.width()) + "px";
+                $(this).attr("data-pos",layer.length);
+                this.onclick = selectMe;
+                $(this).attr("data-layer", "");
+
+                var div = document.createElement("div");
+                var btn = document.createElement("a");
+                btn.className = "eye";
+                $(btn).attr("data-pos",layer.length);
+                btn.onclick = toggleVisible;
+                $(div).append(this).append(btn);
+                $(btn).css("margin-top", Math.floor(100 * can.height() / can.width() / 2) + "px");
+                layerArea.prepend(div);
+                //layerArea.prepend(this);
+                layer.push(this);
+                $(this).attr("data-visible","true");
+                $(this).click();
+                console.log("addLayer:pos_layer=" + pos_layer + ", isFirst=" + this.isFirst);
+                this.isFirst = false;
+            }
+        }
+
+        var toggleVisible = function(){
+            var pos = $(this).attr("data-pos");
+            console.log("toggleVisible is called. pos=" + pos);
+            if ($(this).hasClass("noneEye")) {
+                $(this).removeClass("noneEye").addClass("eye");
+                $(canvasItems[pos]).css("display", "block");
+                $(layer[pos]).attr("data-visible", "true");
+            } else {
+                $(this).removeClass("eye").addClass("noneEye");
+                $(canvasItems[pos]).css("display", "none");
+                $(layer[pos]).attr("data-visible", "false");
+            }
+        }
+/*********** Layer Funtions(End) ****************/
+
+
+/*********** Utility Funtions ****************/
+function scrollX(){return document.documentElement.scrollLeft || document.body.scrollLeft;}
+function scrollY(){return document.documentElement.scrollTop || document.body.scrollTop;}
+
+/*********** Initialize (Start) ****************/
+        $("#addLayerButton").click(addLayer);
+        addLayer();
+
+/*********** Initialize (End) ****************/
+
+	});
+</script>
+
+
+	</head>
+	<body>
+	<div style="width:100%;">
+        <h1 id="title" style="display:inline;">Canvasお絵描きアプリ</h1>
+    </div>
+    <div style="float:left;">
+        <div style="width:150px; height:30px;background-color:#fee; overflow-y:scroll;">
+            <span style="padding-left:5px;">Layer</span>
+            <button id="addLayerButton" style="margin:3px; color:#700; font-weight:bold; text-decoration:none; border:3px solid #aaf; border-radius:15px;">＋</button><br>
+        </div>
+        <div style="width:150px; height:450px;background-color:#fee; overflow-y:scroll;">
+            <div id="layerArea">
+            </div>
+        </div>
+    </div>
+	<div id="canvasArea" style="float:left;">
+		<canvas id="myCanvas" height="480px" width="640px"></canvas>
+	</div>
+
+	<div style="float:left;">
+		<div id="pointer">
+			x : <span id="p1"></span>,
+			y : <span id="p2"></span>
+		</div>
+		<div id="canDraw">Drawing NO</div>
+		<div>
+			<span>Width : </span>
+			<button class="setWidth nomalBtn">1</button>
+			<button class="setWidth nomalBtn">5</button>
+			<button class="setWidth nomalBtn">10</button>
+			<button class="setWidth nomalBtn">15</button>
+			<button class="setWidth nomalBtn">20</button>
+		</div>
+		<div id="colorPicker">
+<!--
+			<canvas id="colorRed" width="20" height="20" style="border:1px solid #aaaaaa;"></canvas>
+			<canvas id="colorGreen" width="20" height="20" style="border:1px solid #aaaaaa;"></canvas>
+			<canvas id="colorBlue" width="20" height="20" style="border:1px solid #aaaaaa;"></canvas>
+			<canvas id="colorWhite" width="20" height="20" style="border:1px solid #aaaaaa;"></canvas>
+			<canvas id="colorBlack" width="20" height="20" style="border:1px solid #aaaaaa;"></canvas>
+			<span>  selectedColor : </span>
+			<canvas id="colorSelected" width="20" height="20" style="border:1px solid #aaaaaa;"></canvas>
+-->
+            <div>
+                <!-- <div id="colorPickerDiv" style="float:left; border:1px solid #888; width:100px; height:44px;">#ffffff</div> -->
+                <div id="colorPickerDiv" style="float:left; border:1px solid #888; width:44px; height:44px; margin-left:5px; margin-bottom:5px;"></div>
+                <div style="clear:both;"></div>
+            </div>
+		</div>
+		<div><button id="tmpSaveButton" class="nomalBtn">一時保存</button><span style="font-size:small;">（最大10個まで）</span></div>
+		<div><button id="saveButton" class="nomalBtn">画像としてダウンロードする</button></div>
+		<div><button id="drawButton" class="nomalBtn">自由に描く</button> <button id="poligonButton" class="nomalBtn">四角を描く</button></div>
+        <div><button id="backBtn" class="nomalBtn">戻る</button> <button id="forwardBtn" class="nomalBtn">進む</button></div>
+        <div><button id="clearButton" class="nomalBtn">クリアする</button></div>
+        backBtn, #forwardBtn
+	</div>
+	<div style="clear:left;"></div>
+    <br>
+    <span id="title_tmpList">一時保存データ（クリックで読み込み、長押しで削除）</span>
+    <div id="tmpList" style="height:75px;"></div>
+
+</div>
+
+
+<p>オリジナル画像</p>
+<img src="images/thought.png">
+<br>
+<input type="button name="edge" value="エッジ検出" onClick="EdgeDetector()">
+<br>
+<script>
+    /**
+ * エッジ検出
+ */
+function EdgeDetector() {
+  var _canvasW = 906; // 横幅256ピクセル
+  var _canvasH = 608; // 縦幅256ピクセル
+  var canvas = document.getElementById("myCanvas");
+  var context = canvas.getContext("2d");
+  var imgObj = new Image(_canvasW, _canvasH);
+  imgObj.src = "images/thought.png";
+  context.drawImage(imgObj, 0, 0);
+
+  var grayImage = new Array(_canvasW * _canvasH);
+
+  for(var y = 0; y < _canvasH; y++){
+    for(var x = 0; x < _canvasW; x++){
+      var pixelData = getPixel(canvas, x, y, _canvasW, _canvasH); // ピクセル値を取得する
+      var R = pixelData.R;
+      var G = pixelData.G;
+      var B = pixelData.B;
+
+      // グレースケール化
+      grayImage[y * _canvasW + x] = ToGrayscale(R, G, B);
+    }
+  }
+
+  /* Sobelフィルタ */
+  var filter = new Array();
+  filter[0] = 1; filter[1] = 0; filter[2] = -1;
+  filter[3] = 1; filter[4] = 0; filter[5] = -1;
+  filter[6] = 1; filter[7] = 0; filter[8] = -1;
+
+  /* 空間フィルタリング */
+  var resultImage = SpatialFiltering(grayImage, _canvasH, _canvasW, filter, 3);
+
+  /* セット */
+  for (var y = 0; y < _canvasH; y++) {
+    for (var x = 0; x < _canvasW; x++) {
+      var I = resultImage[y * _canvasW + x];
+      setPixel(canvas, x, y, I, I, I, 255, _canvasW, _canvasH);
+    }
+  }
+}
+
+/**
+ * 空間フィルタリング
+ */
+function SpatialFiltering(grayImage, height, width, filter, size_f) {
+
+  var init = Math.floor(size_f / 2);
+  var from = - init;
+  var to = init;
+  
+  var resultImage = new Array(height * width);
+
+  for (var k = 0; k < resultImage.length; k++) {
+    resultImage[k] = 0;
+  }
+
+  for  (var i = init; i < height - init; i++) {
+    for (var j = init; j < width - init; j++) {
+      var sum = 0.0;
+      /* フィルタリング */
+      for (var n = from; n <= to; n++) {
+        for (var m = from; m <= to; m++) {
+          sum += grayImage[(i + n) * width + j + m] * 
+            filter[(n + init) * size_f + m + init];
+        }
+      }
+      resultImage[i * width + j] = Math.floor(Math.abs(sum));
+    }
+  }
+  return resultImage;
+}
+
+/**
+ * RBGをグレースケールにして返する
+ */
+function ToGrayscale(R, G, B) {
+  R = Math.floor(R * 0.299);
+  G = Math.floor(G * 0.587);
+  B = Math.floor(B * 0.114);
+  return R + G + B;
+}
+
+// GetPixel
+// 戻り値はオブジェクトのプロパティでR,G,B
+function getPixel(srcCanvas, x, y, canvasW, canvasH){
+  if (window.opera) {
+    var gContext = srcCanvas.getContext("opera-2dgame");
+    var rgbStr = gContext.getPixel(x, y); // ピクセル値を取得する
+    var R = eval("0x"+rgbStr.substring(1,3));
+    var G = eval("0x"+rgbStr.substring(3,5));
+    var B = eval("0x"+rgbStr.substring(5,7));
+    return {R:R, G:G, B:B};
+  }
+
+  var imagePixelData = srcCanvas.getContext("2d").getImageData(x, y, 1, 1).data;
+  var R = imagePixelData[0];
+  var G = imagePixelData[1];
+  var B = imagePixelData[2];
+  return {R:R, G:G, B:B};
+}
+
+// SetPixel
+function setPixel(srcCanvas, x, y, R, G, B, A, canvasW, canvasH){
+  if (window.opera) {
+    var gContext = srcCanvas.getContext("opera-2dgame");
+    var rgbaColor = "rgba("+R+","+G+","+B+","+A+")";
+    gContext.setPixel(x,y, rgbaColor);
+    return;
+  }
+  var context = srcCanvas.getContext("2d");
+  var pixelImage = context.createImageData(1, 1);
+  pixelImage.data[0] = R;
+  pixelImage.data[1] = G;
+  pixelImage.data[2] = B;
+  pixelImage.data[3] = A;
+  context.putImageData(pixelImage, x, y);
+}
+</script>
+
+
+<!-- fotter -->
+<br>
+<pre style="height:40px; overflow-y:scroll;">
+ver2.0 2012/03/03  add layer concept and several bugfix.
+ver1.3 2012/02/21  add colorPicker.
+ver1.2 2012/02/14  add drawPoligon function.
+ver1.1 2012/02/12  add localSave function.
+ver1.0 2011/10/01  initial release.
+</pre>
+<div id="fotter" style="font-size:small;">presented by <a href="/">YoheiM.NET</a></div>
+
+
+	</body>
+</html>

@@ -15,17 +15,29 @@
 	</head>
 
 	<body>
-		<header></header>
+		<header>
+            <img class="logo header" src="images/logo.png">
+        </header>
 		<main>
-            <p class="p-center border">イメージを選択 - ワード</p>
-            <p class="p-center">作品のイメージに合うワードを１位から３位まで順にタップ</p>
-			
+            <p class="p-center border subject">イメージを選択 - ワード</p>
+            <p class="p-center">作品のイメージに合うワードをタップ</p>
+			<div class=" choice-block-parent left-margin right-margin">
+				<p id ="p_scale" onclick="henkou()" class="choice-figure choice-block-child">エレガント</p>
+				<p id ="p_scale2" onclick="henkou2()" class="choice-figure choice-block-child">フェミニン</p>
+				<p id ="p_scale3" onclick="henkou3()" class="choice-figure choice-block-child">クール</p>
+				<p id ="p_scale4" onclick="henkou4()" class="choice-figure choice-block-child">キュート</p>
+				<p id ="p_scale5" onclick="henkou5()" class="choice-figure choice-block-child">フレッシュ</p>
+				<p id ="p_scale6" onclick="henkou6()" class="choice-figure choice-block-child">シャープ</p>
+				<p id ="p_scale7" onclick="henkou7()" class="choice-figure choice-block-child">ナチュラル</p>
+				<p id ="p_scale8" onclick="henkou8()" class="choice-figure choice-block-child">シンプル</p>
+				<p id ="p_scale9" onclick="henkou9()" class="choice-figure choice-block-child">カジュアル</p>
+			</div>
 			<div class="flex-center btn-last">
                 <div>
                     <a href="https://koyukis.github.io/glass/self-ap.html" class="under-line"></a>
                     <button class="btntextchange btn-move">戻る</button></div>
 				<div>
-                    
+
                     <button class="btntextchange btn-move">次へ</button></div>
 
 			</div>
@@ -33,4 +45,5 @@
         </main>
 		<footer></footer>
 	</body>
+	<script src="js/choice-figure.js"></script>
 </html>

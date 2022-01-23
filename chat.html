@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<title>タブに出る表示</title>
+		<meta name="keywords" content="WAV, wav, 卓展, 卓, 卓展2021" />
+		<meta name="description" content="どんなサイトなのかの説明" />
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+		<link rel="stylesheet" href="css/normalize.css" />
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+
+	<body>
+		<header>
+            <img class="logo header" src="images/logo.png">
+        </header>
+		<main>
+			<div class="chat-grid chat-top">
+				<div class="chat-grid-item">
+					<div>
+						<details>
+						<summary>作品について ⌵</summary>
+							<p>a</p>
+						</details>
+					</div>
+					<div>
+						<details>
+						<summary>担当職人 ⌵</summary>
+							<p>a</p>
+						</details>
+					</div>
+				</div>
+				<div class="chat-grid-item">
+					<div style="width:100%;height:80px;background-color:#f9f9f9;overflow:scroll;">
+						<p class="p-syokunin">齋藤様<br>
+						この度はご依頼ありがとうございます。<br></p>
+					</div>
+					<p id="view" style="width:100%;height:500px;background-color:#f9f9f9;overflow:scroll;">
+						<br>
+					</p>
+				<input type="text" value="" id="word" style="width:300px;font-size:110%;">
+				<input  type="button" value="送信" style="font-size:110%;" onClick='getJob01();'>
+				</div>
+			</div>
+
+
+
+
+			<script type="text/javascript">
+				var check = false;
+				function getJob01() {
+					if (!check){
+						www=document.getElementById("word").value;// 打ち込んだテキストを取得
+						vvv=document.getElementById("view").innerHTML;// タグ機能を持ったまま（改行できる）
+						document.getElementById("view").classList.add("p-chat");
+						aaa=vvv+www+"<br>";// 次改行
+						document.getElementById("view").innerHTML=aaa;// 出力
+						document.getElementById("word").value = "";// input box内を消去
+						document.getElementById("word").focus();
+					}
+				}
+			</script>
+
+        </main>
+		<footer></footer>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</body>
+</html>

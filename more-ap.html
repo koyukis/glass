@@ -15,26 +15,69 @@
 	</head>
 
 	<body>
-		<header></header>
+		<header>
+            <img class="logo header" src="images/logo.png">
+        </header>
 		<main>
             <p class="p-center border">普段のあなたについて（任意）</p>
             <p class="p-center">合わせたい衣服などその他共有しておきたいイメージがあれば教えてください</p>
-            <p class="left-margin">画像をアップロード</p>
+            <p class="left-margin-2 choi">画像をアップロード</p>
 			<form method="post" enctype="multipart/form-data">
-				<div id="dragDropArea">
-					<div class="drag-drop-inside">
+				<!-- <div id="dragDropArea"  onchange="previewImage(this);"> -->
+					<!-- <div class="drag-drop-inside">
 						<p class="drag-drop-info">ここにファイルをドロップ</p>
-						<p>または</p>
-						<p class="drag-drop-buttons">
-							<input id="fileInput" type="file" accept="image/*" value="ファイルを選択" name="photo" onChange="photoPreview(event)">
+						<p>または</p> -->
+						<p class=" left-margin-2 drag-drop-buttons choi">
+							<input id="fileInput" type="file" accept="image/*" value="ファイルを選択" name="photo"  multiple=" multiple" onchange="loadImage(this);">
 						</p>
-						<div id="previewArea"></div>
-					</div>
-				</div>
+						<div class="right-margin left-margin-2 choi" id="imgPreviewField"></div>
+
 			</form>
-            <p class="left-margin">要望を記入</p>
+
+            <p class="left-margin-2">要望を記入</p>
 			<textarea class="tarea" name="example" cols="50" rows="10"></textarea>
 
+			<script>
+				let key = 0;
+				function loadImage(obj) {
+					for (i = 0; i < obj.files.length; i++) {
+						var fileReader = new FileReader();
+						fileReader.onload = (function (e) {
+							var field = document.getElementById("imgPreviewField");
+							var figure = document.createElement("figure");
+							field.style.width="400px";
+							// var ctx = figure.createContext('2d');
+							var rmBtn = document.createElement("input");
+							var img = new Image();
+							// if (this.img.width >= 1000 || this.img.height >= 1000){
+							// 	this.drawHeight = 1000;
+							// 	this.drawWidth  = this.drawHeight * (this.img.width / this.img.height);
+							// 	//はみ出す場合は幅の上限に合わせる
+							// 	if(this.drawWidth >= 1000){
+							// 		this.drawWidth  = 1000;
+							// 		this.drawHeight = this.drawWidth * (this.img.height / this.img.width);
+							// }}
+
+							img.src = e.target.result;
+							rmBtn.type = "button";
+							rmBtn.name = key;
+							rmBtn.value = "削除";
+
+							rmBtn.onclick = (function () {
+								var element = document.getElementById("img-" + String(rmBtn.name)).remove();
+							});
+
+							figure.setAttribute("id", "img-" + key);
+							figure.appendChild(img);
+							figure.appendChild(rmBtn)
+							field.appendChild(figure);
+							key++;
+						});
+						fileReader.readAsDataURL(obj.files[i]);
+					}
+				}
+
+			</script>
 
 			<div class="flex-center">
                 <div>

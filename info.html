@@ -16,49 +16,82 @@
 
 	<body>
 		<header>
-			<p class="header">ふらす工房</p>
+			<img class="logo header" src="images/logo.png">
 		</header>
 		<main>
             <p class="p-center border">お客様情報入力</p>
+
+            <!-- <div class="info-grid">
+                <div class="info-grid-item">
+                    <p class="info-label">お名前</p>
+                    <p class="info-label">性別</p>
+                    <p class="info-label">電話番号</p>
+                    <p class="info-label">メールアドレス</p>
+                    <p class="info-label">住所</p>
+                    <p class="info-label">作品公開許可</p>
+                    <p class="info-label">チャット公開許可</p>
+                    <p class="info-label">公開用ニックネーム</p>
+                </div>
+                <div class="info-grid-item">
+                    <input class="info-box" type="text" size="50">
+                    <div class="info-box">
+                        <button class="btntextchange btn-sei">男</button>
+                        <button class="btntextchange btn-sei">女</button>
+                    </div>
+                    <input class="info-box" type="text" size="50">
+                    <input class="info-box" type="text" size="50">
+                    <input class="info-box" type="text" size="50">
+                    <input type="range" class="onoff" min="0" max="1" value="0">
+                    <input type="range" class="onoff" min="0" max="1" value="0">
+                    <input class="info-box" type="text" size="50">
+                </div>
+            </div> -->
+
+
             <div class="flex-center">
-                <label>お名前</label>
-                <input type="text" size="50">
+                <label for="name">お名前</label>
+                <input class="info-box" id="name" type="text" size="50">
             </div>
 
             <div class="flex-center">
                 <label>性別</label>
-                <button class="btntextchange btn-move">男</button>
-                <button class="btntextchange btn-move">女</button>
+                <div>
+                    <button class="btntextchange btn-sei">男</button>
+                    <button class="btntextchange btn-sei">女</button>
+                </div>
+
             </div>
 
             <div class="flex-center">
-                <label>電話番号</label>
-                <input type="text" size="50">
+                <label for="phone">電話番号</label>
+                <input class="info-box" id="phone" type="text" size="50">
             </div>
 
             <div class="flex-center">
-                <label>メールアドレス</label>
-                <input type="text" size="50">
+                <label for="mail">メールアドレス</label>
+                <input class="info-box" id="mail" type="text" size="50">
+            </div>
+
+            <div class="flex-center ">
+                <label for="adress">住所</label>
+                <input class="info-box" id="adress" type="text" size="50">
             </div>
 
             <div class="flex-center">
-                <label>住所</label>
-                <input type="text" size="50">
+                <label>作品公開許可
+                <input class="info-box"  type="checkbox" name="level" value="ok">
+                </label>
             </div>
 
-            <div class="flex-center">
-                <label>作品公開許可</label>
-                <input type="range" class="onoff" min="0" max="1" value="0">
-            </div>
+            <!-- <div class="flex-center">
+                <label>チャット公開許可
+                <input class="info-box" type="range" class="onoff" min="0" max="1" value="0">
+                </label>
+            </div> -->
 
             <div class="flex-center">
-                <label>チャット公開許可</label>
-                <input type="range" class="onoff" min="0" max="1" value="0">
-            </div>
-
-            <div class="flex-center">
-                <label>公開用ニックネーム</label>
-                <input type="text" size="50">
+                <label for="subname">公開用ニックネーム</label>
+                <input class="info-box" id="subname" type="text" size="50">
             </div>
 
 
@@ -67,7 +100,7 @@
                     input[type=range] {
                         -webkit-appearance: none;
                         width: 60px;
-                        margin: 0px 0;
+                        margin: 0 0 7% 0;
                     }
                     input[type=range]:focus {
                         outline: none;
@@ -100,7 +133,12 @@
 
 
 
-			<div class="flex-center btn-last">
+            <div class="flex-center btn-last">
+                <button class="btntextchange btn-move">戻る</button>
+                <button class="btntextchange btn-move">次へ</button>
+            </div>
+
+            <div class="flex-center btn-last">
                 <div>
                     <a href="https://koyukis.github.io/glass/more-ap.html" class="under-line"></a>
                     <button class="btntextchange btn-move">戻る</button></div>

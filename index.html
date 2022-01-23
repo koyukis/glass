@@ -19,7 +19,8 @@
 
 	<body>
 		<header>
-			<p class="header">ふらす工房</p>
+			<img class="logo header" src="images/logo.png">
+			<!-- <p class="header">ふらす工房</p> -->
 			<!-- <p class="header">ARTIST</p>
 			<p class="header">CONCEPT</p>
 			<p class="header">ORDER</p>
@@ -59,7 +60,7 @@
 					<p>青木進次郎2</p>
 				</section>
 				<section id="info3">
-					<p>青木進次郎3</p>
+					<p>佐々木麻里香</p>
 				</section>
 				<section id="info4">
 					<p>青木進次郎4</p>
@@ -71,7 +72,7 @@
 					皆様のご要望に細かく対応し、ガラスの魅力を際限なく感じ取ってもらいたい。<br>
 					私たちはもっとガラスを愛してもらえる世界を目指します。
 				</p>
-				<img>
+				<img class="img-60" src="images/thought.png" alt="思想">
 			</div>
 
 			<div class="how-grid change">
@@ -106,41 +107,81 @@
 				<div class="flex-center">
 					<a href="https://koyukis.github.io/glass/one.html" class="under-line"></a>
 					<button class="btntextchange btn-toppage">依頼</button></div>
+				<div class="request-grid ">
+					<div class="heart" id="het" onclick="heartch()"></div><img class="img request-grid-item" src="images/request/request-03.jpg" alt~="ガラスペン">
+					<div class="heart heart2" id="het" onclick="heartch()"></div><img class="img request-grid-item" src="images/request/request-01.jpg" alt~="ピアス">
+					<div class="heart heart3"></div><img class="img request-grid-item" src="images/request/request-02.JPG" alt~="アクセ">
+				</div >
+				<div><details>
+				<summary class="flex-right" id="col" onclick="moresee()">もっと見る ⌵</summary>
 				<div class="request-grid">
-					<img class=" img request-grid-item" src="images/request/request-03.jpg" alt~="ガラスペン">
-					<img class="img request-grid-item" src="images/request/request-01.jpg" alt~="ピアス">
-					<img class="img request-grid-item" src="images/request/request-02.JPG" alt~="アクセ">
-				</div>
-
-				<a class="flex-right">もっと見る ></a>
+					<div class=" heart heartred"></div><img class="img request-grid-item" src="images/request/request-04.jpg" >
+					<!-- <img class="img request-grid-item" src="images/request/request-04.jpg" >
+					<img class="img request-grid-item" src="images/request/request-04.jpg" >
+				</div> -->
+				</details></div>
 			</div>
+			<script>
+				var hea = false;
+				function heartch() {
+					if (!hea){
+						document.getElementById("het").style.color = "white";
+						hea = true;
+					}
+					else{
+						document.getElementById("het").style.color = "#bfbebe";
+						hea = false;
+					}
+				};
+				var color = false;
+				function moresee() {
+					if (!color){
+						document.getElementById("col").style.color = "lightgray";
+						color = true;
+					}
+					else{
+						document.getElementById("col").style.color = "black";
+						color = false;
+					}
+				};
+			</script>
 
 
 			<div class="change">
 				<p class="p-center">GALLERY</p>
-				<div class="works-grid">
-					<div class="works-grid-item">
-						<img class="img" src="images/works/works-01.jpg"alt="皿">
-						<p class="works-box">お皿</p>
-					</div>
-					<div class="works-grid-item">
-						<p class="works-box"></p>
-						<img class="img" src="images/works/works-02.jpg"alt="青皿">
-					</div>
-					<div class="works-grid-item">
-						<img class="img" src="images/works/works-03.JPG"alt="花瓶">
-						<p class="works-box"></p>
-					</div>
-					<div class="works-grid-item">
-						<p class="works-box"></p>
-						<img class="img" src="images/works/works-04.jpg"alt="ステグラ">
-					</div>
+				<div class="slider-yoko">
+						<li>
+							<img class="works-hover img" src="images/works/works-01.jpg"alt="皿">
+							<p class="works-box">お皿</p>
+						</li>
+						<li>
+							<p class="works-box"></p>
+							<img class="works-hover img" src="images/works/works-02.jpg"alt="青皿">
+						</li>
+						<li>
+							<img class="works-hover img" src="images/works/works-03.JPG"alt="花瓶">
+							<p class="works-box"></p>
+						</li>
+						<li>
+							<p class="works-box"></p>
+							<img class="works-hover img" src="images/works/works-04.jpg"alt="ステグラ">
+						</li>
+						<li>
+							<img class="works-hover img" src="images/works/works-05.jpg"alt="濃い花瓶">
+							<p class="works-box"></p>
+						</li>
+						<li>
+							<p class="works-box"></p>
+							<img class="works-hover img" src="images/works/works-06.jpg"alt="青皿">
+						</li>
 				</div>
-				<p class="flex-right">工房の商品購入はこちらから ></p>
+				<!-- <p class="flex-right">工房の商品購入はこちらから ></p> -->
 			</div>
 
 
-			<img>
+			<div class="twitter-center" style="width: 50%; height: 500px; overflow-y: scroll; border: 1px #999999 solid;">
+				<img class="img" src="images/twitter.png" alt="twitter">
+			</div>
 		</main>
 		<footer></footer>
 		<!-- jquery -->
@@ -156,5 +197,7 @@
 		<script src="js/slide.js"></script>
 		<!-- モーダル自作 -->
 		<script src="js/modaling.js"></script>
+		<!-- worksの横スライド -->
+		<script src="js/works-slide.js"></script>
 	</body>
 </html>
