@@ -159,3 +159,13 @@ function henkou16() {
         scale=false;
     }
 };
+function henkousrc() {
+    if (!scale){
+        document.getElementById("p_scalesrc").style.transform = "scale(1.1,1.1)";
+        scale=true;
+    }
+    else {
+        document.getElementById("p_scalesrc").style.transform = "scale(1.0,1.0)";
+        scale=false;
+    }
+};

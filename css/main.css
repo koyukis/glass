@@ -4,12 +4,17 @@
 	padding: 0;
 }
 body{
-	font-family: "YuMincho +36p Kana","游明朝体+36ポかな";
+	font-family: serif;
 	line-height:1.5;
 }
-
+.p-chon{
+	font-size: 2vw;
+}
+.subject{/* 順次の主題 */
+	font-size:3vw;
+}
 .header{
-	background-color: rgba(255,255,255,0.7);
+	background-color: rgba(255,255,255,0);
 	width: 100%;
 	/* height: 80px; */
 	position: fixed;
@@ -18,15 +23,24 @@ body{
 .header-row{
 
 }
+.footer{
+	padding:50px;
+	background-color:#d8d9c7 ;
+}
 .logo{
 	width:15%;
 }
-
+.personal-p{
+	color: #576851;
+}
 .change{
-	margin-bottom:20%;
+	margin-bottom:30%;
 }
 .choi{/* self.apプレビュー下 */
 	margin-bottom:5%;
+}
+.mochoi{
+	margin-bottom: 10%;
 }
 
 .right-margin{
@@ -44,9 +58,7 @@ body{
 	justify-content: center;
 	align-items: center;
 }
-.subject{/* 順次の主題 */
-	font-size:4vw;
-}
+
 
 .p-center{
 	text-align:center;
@@ -92,43 +104,6 @@ body{
 	/*背景画像が.slider-item全体を覆い表示*/
 }
 
-
-
-/*infoエリアをはじめは非表示*/
-#info{
-	display: none;
-}
-#info2{
-	display: none;
-}
-#info3{
-	display: none;
-}
-#info4{
-	display: none;
-}
-
-.modal-open:hover{
-	opacity: 0.8; filter: white;
-	-webkit-transition: all .3s; transition: all .3s;
-}
-/*モーダルの横幅を変更したい場合*/
-.modaal-container{
-    max-width: 600px;
-}
-
-/*モーダルのボタンの色を変更したい場合*/
-.modaal-close:after,
-.modaal-close:before{
-	background:#ccc;
-}
-
-.modaal-close:focus:after,
-.modaal-close:focus:before,
-.modaal-close:hover:after,
-.modaal-close:hover:before{
-	background:#666;
-}
 
 
 .how-grid{
@@ -262,8 +237,13 @@ li{
 	list-style:none;
 }
 
+.img-works{
+	width: 90%;
+	margin: 0 5% 0 5%;
+}
 .works-hover{
 	transition:all 0.2s;
+	margin:50px;
 }
 .works-hover:hover{
 	transform: translateY(-20px);
@@ -276,7 +256,7 @@ li{
 	height:23vw;
 	/* width:25%; */
 	text-align:center;
-	background-color: #d8d9c7
+	background-color: #d8d9c7;
 }
 .twitter-center{
 	margin:0 25% 20% 25%;
@@ -304,7 +284,12 @@ li{
 .btn-last{
 	margin-top: 5%;
 }
+.search-button{
 
+}
+.search-button:hover{
+	filter:brightness(50%);
+}
 #dragDropArea{
 	background-color: #f4f4f4;
 	margin: 2% 20% 5% 20%;
@@ -372,23 +357,27 @@ label{
 	width:150px;
 	height:150px;
 	padding:5%;
-	background-color: rgb(141, 125, 125);
+	background-color: rgb(133, 158, 133);
 	border-radius:25px;
 }
+.choice-p{
+	color: white;
+	font-size: 20px;
+}
 .c-blue{
-	background-color: rgb(35, 98, 222);
+	background-color: rgb(5, 74, 213);
 }
 .c-red{
-	background-color: rgb(164, 28, 28);
+	background-color: rgb(203, 6, 6);
 }
 .c-pink{
-	background-color: rgb(210, 38, 182);
+	background-color: rgb(236, 62, 207);
 }
 .c-orange{
-	background-color: rgb(217, 104, 34);
+	background-color: rgb(254, 125, 44);
 }
 .c-yellow{
-	background-color: rgb(254, 254, 30);
+	background-color: rgb(252, 240, 0);
 }
 .c-yellowgreen{
 	background-color: rgb(141, 212, 18);
@@ -397,10 +386,10 @@ label{
 	background-color: rgb(102, 202, 236);
 }
 .c-bluegreen{
-	background-color: rgb(21, 203, 176);
+	background-color: rgb(8, 129, 74);
 }
 .c-violet{
-	background-color: rgb(116, 53, 225);
+	background-color: rgb(125, 53, 251);
 }
 .c-cha{
 	background-color: rgb(120, 68, 23);
@@ -408,6 +397,7 @@ label{
 .c-white{
 	background-color: rgb(255, 255, 255);
 	border:solid 1px #999;
+	color: black;
 }
 .c-black{
 	background-color: rgb(0, 0, 0);
@@ -588,3 +578,5 @@ html.is-dragging .upload{
 .draw-area-index{
 	z-index: 100;
 }
+
+

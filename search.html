@@ -20,15 +20,14 @@
             <img class="logo header" src="images/logo.png"></a>
 		</header>
 		<main>
-            <p class="p-center border">イメージ写真を探す</p>
+            <p class="p-center border subject">イメージ写真を探す</p>
             <div class="flex-center">
-
                 <label class="left-margin-2">キーワード検索</label>
                 <input type="text" size="40">
-                <button class="btntextchange btn-move">検索</button>
+                <button class="btntextchange btn-move mochoi">検索</button>
             </div>
-                <p class="left-margin-2">いいねした作品から探す</p>
-				<div class="left-margin">
+                <p class="left-margin-2 choi">いいねした作品から探す</p>
+				<div class="left-margin" id ="p_scalesrc" onclick="henkousrc()">
 					<div class=" heart heartred"></div><img class="img-30 request-grid-item" src="images/request/request-04.jpg">
 				</div>
 
@@ -41,15 +40,8 @@
 
 			</div>
 
-			<script>
-				function opacity() {
-					var obj = document.getElementsByClassName("btn")[0];
-					obj.style.border = "solid 3px red";
-					alert("click");
-				}
-			</script>
         </main>
 		<footer></footer>
-		<script src="js/ap.js"></script>
+		<script src="js/choice-figure.js"></script>
 	</body>
 </html>
