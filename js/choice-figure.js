@@ -159,6 +159,16 @@ function henkou16() {
         scale=false;
     }
 };
+function henkou0() {
+    if (!scale){
+        document.getElementById("p_scale-1").style.transform = "scale(1.5,1.5)";
+        scale=true;
+    }
+    else {
+        document.getElementById("p_scale-1").style.transform = "scale(1.0,1.0)";
+        scale=false;
+    }
+};
 function henkousrc() {
     if (!scale){
         document.getElementById("p_scalesrc").style.transform = "scale(1.1,1.1)";

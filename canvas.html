@@ -17,7 +17,7 @@
         </header>
 		<main>
         <!-- <div class=" chat-top"> -->
-            <div class="canvas-wrap">
+            <div class="canvas-wrap ">
                 <canvas
                         class="canvas"
                         id="can"
@@ -30,29 +30,27 @@
                         width="1000px"
                         height="700px"
                         style="border: 1px solid #000000;"></canvas>
-                        
-       
-        
             </div>
                 <!-- 色を選択できるカラーパレットを用意する。 -->
+            <div class="left-margin-2">
             <span id="color-palette"></span>
             <div><button id="clear-button">クリア</button></div>
-            <div><button id="eraser-button">消しゴムモード</button></div>
-<div id="draw-area">
-<canvas class="move-canvas canvas" id="canvas"></canvas>
-        <label class="upload" for="file">
-            <input
-            class="upload-item"
-            type="file"
-            name="image"
-            id="file"
-            accept="image/*"
-            >
-            <span class="upload-text">画像をアップロード</span>
-        </label>
-</div>
+            <div><button id="eraser-button" class="choi">消しゴムモード</button></div></div>
+            <!-- <div id="draw-area"> -->
+            <canvas class="move-canvas canvas" id="canvas"></canvas>
+                    <label class="upload mochoi" for="file">
+                        <input
+                        class="upload-item"
+                        type="file"
+                        name="image"
+                        id="file"
+                        accept="image/*"
+                        >
+                        <span class="upload-text">画像をアップロード</span>
+                    </label>
+            </div>
         </div>
-        <p>コメント</p>
+        <p class="left-margin-2">コメント</p>
         <textarea class="tarea" name="example" cols="50" rows="10"></textarea>
 
 

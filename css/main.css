@@ -446,6 +446,10 @@ label{
 .chat-grid-item{
 
 }
+.chat-img{
+	width: 90%;
+	margin: 2% 5% 0 5%;
+}
 .chat-top{
 	padding-top: 10%;
 }
@@ -542,7 +546,7 @@ html.is-dragging .upload{
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-	width: 100%;
+	width: 30%;
 	height: 90px;
 	background: #eee;
 	transition: .2s ease;
