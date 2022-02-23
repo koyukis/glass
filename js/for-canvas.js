@@ -115,39 +115,30 @@
                 });
 
 
-                var numLayers = $('#demo3').children('canvas').length,
-    aryCvs = [];
+//                 var numLayers = $('#demo3').children('canvas').length,
+//     aryCvs = [];
  
-$('[name=mode][value=' + numLayers + ']').prop('checked', true);
+// $('[name=mode][value=' + numLayers + ']').prop('checked', true);
  
-for (var i = 1; i <= numLayers; i++) {
-  //各レイヤーの初期化とid付加
-  aryCvs[i - 1] = new fabric.Canvas('cvs' + i);
-  $('#cvs' + i).parent('div.canvas-container').attr('id', 'layer' + i);
+// for (var i = 1; i <= numLayers; i++) {
+//   //各レイヤーの初期化とid付加
+//   aryCvs[i - 1] = new fabric.Canvas('cvs' + i);
+//   $('#cvs' + i).parent('div.canvas-container').attr('id', 'layer' + i);
  
-  //各レイヤーに要素生成
-  aryCvs[i - 1].add(new fabric.Text(
-    i + '', {
-    fontFamily: 'Meyrio',
-    fontSize: 72,
-    fill: 'blue',
-    textBackgroundColor: 'lightblue',
-    left: 80 * i - 20,
-    top: 50 * i - 20
-  }));
-}
+
+// }
  
-//----- レイヤー切替 -----
-$('[name=mode]').click(function(){
-  //現在＝最後のレイヤー番号取得
-  var n = $('#demo3').children('div.canvas-container').last().attr('id').slice(-1);
+// //----- レイヤー切替 -----
+// $('[name=mode]').click(function(){
+//   //現在＝最後のレイヤー番号取得
+//   var n = $('#demo3').children('div.canvas-container').last().attr('id').slice(-1);
  
-  //現在のレイヤーの選択枠解除
-  aryCvs[n - 1].discardActiveObject().renderAll();
+//   //現在のレイヤーの選択枠解除
+//   aryCvs[n - 1].discardActiveObject().renderAll();
  
-  //選択レイヤーを最後に移動
-  $('#demo3').append($('#layer' + $('[name=mode]:checked').val()));
-});
+//   //選択レイヤーを最後に移動
+//   $('#demo3').append($('#layer' + $('[name=mode]:checked').val()));
+// });
 
 
 // import interact from 'interactjs'
