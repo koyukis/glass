@@ -527,7 +527,7 @@ html.is-dragging .upload{
   
   .move-canvas{
 	width: 1000px;
-	height: 700px;
+	height: 750px;
 	touch-action: none;
 	user-select: none;
   }
@@ -546,7 +546,8 @@ html.is-dragging .upload{
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-	width: 30%;
+	margin-top: 20px;
+	width: 80%;
 	height: 90px;
 	background: #eee;
 	transition: .2s ease;

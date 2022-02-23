@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="css/normalize.css" />
         <link rel="stylesheet" href="css/main.css" />
         <link rel="stylesheet" href="css/colorjoe.css">
-        <title>お絵描き DEMO</title>
+        <title>ふらす工房</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     </head>
 
@@ -17,28 +17,33 @@
         </header>
 		<main>
         <!-- <div class=" chat-top"> -->
-            <div class="canvas-wrap ">
+            <div class="canvas-wrap " id="demo3">
                 <canvas
                         class="canvas"
-                        id="can"
+                        id="cvs1"
                         width="1000px"
                         height="700px"
                         style="border: 1px solid #000000;"></canvas>
                 <canvas
                         class="move-canvas canvas"
-                        id="draw-area"
+                        id="cvs2"
                         width="1000px"
                         height="700px"
-                        style="border: 1px solid #000000;"></canvas>
+                        style="border: 1px solid #000000;">
+                </canvas>
+                <canvas class="move-canvas canvas" id="canvas"></canvas>
             </div>
                 <!-- 色を選択できるカラーパレットを用意する。 -->
-            <div class="left-margin-2">
-            <span id="color-palette"></span>
-            <div><button id="clear-button">クリア</button></div>
-            <div><button id="eraser-button" class="choi">消しゴムモード</button></div></div>
+            <div class="request-grid choi">
+            <span class="repuest-grid-item" id="color-palette"></span>
+            
             <!-- <div id="draw-area"> -->
-            <canvas class="move-canvas canvas" id="canvas"></canvas>
-                    <label class="upload mochoi" for="file">
+
+                <!-- <label><input type="radio" name="mode" value="1">レイヤー1</label> -->
+                <!-- <label><input type="radio" name="mode" value="2">お絵かきレイヤー</label>
+                <label><input type="radio" name="mode" value="3" checked>画像移動レイヤー</label> -->
+                <div class="repuest-grid-item">
+                    <label class="upload mochoi " for="file">
                         <input
                         class="upload-item"
                         type="file"
@@ -48,8 +53,9 @@
                         >
                         <span class="upload-text">画像をアップロード</span>
                     </label>
+                    <button class="left-margin-2" id="clear-button">やり直す</button></div>
             </div>
-        </div>
+
         <p class="left-margin-2">コメント</p>
         <textarea class="tarea" name="example" cols="50" rows="10"></textarea>
 
@@ -65,6 +71,7 @@
 
     </body>
     <script src="https://notes.sharesl.net/wp-content/themes/notes1.2/assets/dist/interact-canvas.bundle.js?1635819135"></script>
+    <script src="js/fabric.min.js"></script>
     <script src="js/interact.js"></script>
     <script src="js/for-canvas.js"></script>
     <script src="js/colorjoe.js"></script>

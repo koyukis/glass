@@ -1,4 +1,4 @@
-    const canvas = document.querySelector('#can');
+    const canvas = document.querySelector('#cvs1');
     var canvasWidth = 1000;
     var canvasHeight = 750;
     canvas.width = canvasWidth;
@@ -18,7 +18,7 @@
             // 元々書かれてた説明のコメントは削除しました。理由は次のとおりです。
             // - 今回の変更差分の説明コメントのみにすることで、どの部分で変更があったかわかりやすくするため
             window.addEventListener('load', () => {
-                const canvas = document.querySelector('#draw-area');
+                const canvas = document.querySelector('#canvas');
                 var canvasWidth = 1000;
                 var canvasHeight = 750;
                 canvas.width = canvasWidth;
@@ -77,12 +77,12 @@
                     clearButton.addEventListener('click', clear);
     
                     // 消しゴムモードを選択したときの挙動
-                    const eraserButton = document.querySelector('#eraser-button');
-                    eraserButton.addEventListener('click', () => {
+                    // const eraserButton = document.querySelector('#eraser-button');
+                    // eraserButton.addEventListener('click', () => {
                     // 消しゴムと同等の機能を実装したい場合は現在選択している線の色を
                     // 白(#FFFFFF)に変更するだけでよい
-                    currentColor = '#FFFFFF';
-                    });
+                    // currentColor = '#FFFFFF';
+                    // });
     
                     canvas.addEventListener('mousedown', dragStart);
                     canvas.addEventListener('mouseup', dragEnd);
@@ -115,6 +115,39 @@
                 });
 
 
+                var numLayers = $('#demo3').children('canvas').length,
+    aryCvs = [];
+ 
+$('[name=mode][value=' + numLayers + ']').prop('checked', true);
+ 
+for (var i = 1; i <= numLayers; i++) {
+  //各レイヤーの初期化とid付加
+  aryCvs[i - 1] = new fabric.Canvas('cvs' + i);
+  $('#cvs' + i).parent('div.canvas-container').attr('id', 'layer' + i);
+ 
+  //各レイヤーに要素生成
+  aryCvs[i - 1].add(new fabric.Text(
+    i + '', {
+    fontFamily: 'Meyrio',
+    fontSize: 72,
+    fill: 'blue',
+    textBackgroundColor: 'lightblue',
+    left: 80 * i - 20,
+    top: 50 * i - 20
+  }));
+}
+ 
+//----- レイヤー切替 -----
+$('[name=mode]').click(function(){
+  //現在＝最後のレイヤー番号取得
+  var n = $('#demo3').children('div.canvas-container').last().attr('id').slice(-1);
+ 
+  //現在のレイヤーの選択枠解除
+  aryCvs[n - 1].discardActiveObject().renderAll();
+ 
+  //選択レイヤーを最後に移動
+  $('#demo3').append($('#layer' + $('[name=mode]:checked').val()));
+});
 
 
 // import interact from 'interactjs'
